@@ -1,4 +1,4 @@
-package codechallenge.bank.usecase.interfaces;
+package codechallenge.bank.usecase.interfaces.usecase;
 
 import java.math.BigDecimal;
 

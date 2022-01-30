@@ -1,26 +1,35 @@
 package codechallenge.bank.entrypoint.rest;
 
+import codechallenge.bank.domain.Account;
+import codechallenge.bank.domain.Transaction;
+import codechallenge.bank.entrypoint.rest.RequestDTO.CreateTransactionDTO;
+import codechallenge.bank.entrypoint.rest.ResponseDTO.AccountDTO;
 import codechallenge.bank.entrypoint.rest.ResponseDTO.FetchBalanceResponseDTO;
-import codechallenge.bank.usecase.interfaces.CreateAccount;
-import codechallenge.bank.usecase.interfaces.CreateTransaction;
-import codechallenge.bank.usecase.interfaces.FetchBalance;
+import codechallenge.bank.entrypoint.rest.ResponseDTO.TransactionDTO;
+import codechallenge.bank.usecase.interfaces.usecase.CreateAccount;
+import codechallenge.bank.usecase.interfaces.usecase.CreateTransaction;
+import codechallenge.bank.usecase.interfaces.usecase.FetchBalance;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.math.BigDecimal;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/bank")
 @RequiredArgsConstructor
 public class BankController {
+
         private final CreateAccount createAccount;
         private final FetchBalance fetchBalance;
         private final CreateTransaction createTransaction;
 
-    @PostMapping("/create")
-    public String createAccount(){
-        return createAccount.execute();
-
+    @PostMapping("/account")
+    public ResponseEntity<AccountDTO> createAccount(UriComponentsBuilder uriBuilder){
+        Account account = createAccount.execute();
+        URI uri = uriBuilder.path("/account/{id}").buildAndExpand(account.getId()).toUri();
+        return ResponseEntity.created(uri).body(new AccountDTO(account));
     }
 
     @GetMapping("/balance/{accountId}")
@@ -28,9 +37,16 @@ public class BankController {
         return new FetchBalanceResponseDTO(fetchBalance.execute(accountId));
     }
 
-    @PostMapping("/transaction/{from}/{to}/{typeOfTransaction}")
-    public String createTransaction(String from, String to, String typeOfTransaction){
-        return createTransaction.execute(from, to,typeOfTransaction);
+    @PostMapping("/transaction")
+    public ResponseEntity<TransactionDTO> createTransaction(
+            @RequestBody CreateTransactionDTO createTransactionDTO, UriComponentsBuilder uriBuilder){
+        Transaction transaction =  createTransaction.execute(
+                createTransactionDTO.getSourceAccountId(),
+                createTransactionDTO.getDestinationAccountId(),
+                createTransactionDTO.getAmount());
+
+        URI uri = uriBuilder.path("/transaction/{id}").buildAndExpand(transaction.getTxId()).toUri();
+        return ResponseEntity.created(uri).body(new TransactionDTO(transaction));
     }
 
 
