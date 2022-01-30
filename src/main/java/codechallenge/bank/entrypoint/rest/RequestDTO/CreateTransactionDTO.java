@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 @Setter
 public class CreateTransactionDTO {
 
-    private String sourceAccountId;
-    private String destinationAccountId;
+    private Long sourceAccountId;
+    private Long destinationAccountId;
     private BigDecimal amount;
 
 }

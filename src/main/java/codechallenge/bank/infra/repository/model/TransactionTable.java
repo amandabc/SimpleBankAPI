@@ -3,38 +3,38 @@ package codechallenge.bank.infra.repository.model;
 import codechallenge.bank.domain.Account;
 import codechallenge.bank.domain.Transaction;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
+@Table(name = "transaction")
 public class TransactionTable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String txId;
+    private Long txId;
     private BigDecimal amount;
-    private String sourceAccountId;
-    private String destinationAccountId;
+    private Long sourceAccountId;
+    private Long destinationAccountId;
 
-
-    public TransactionTable(String sourceAccountId, String destinationAccountId, BigDecimal amount){
+    public TransactionTable(Long sourceAccountId, Long destinationAccountId, BigDecimal amount){
         this.setSourceAccountId(sourceAccountId);
         this.setDestinationAccountId(destinationAccountId);
         this.setAmount(amount);
     }
 
-    public TransactionTable(String txId, String sourceAccountId, String destinationAccountId, BigDecimal amount){
+    public TransactionTable(Long txId, Long sourceAccountId, Long destinationAccountId, BigDecimal amount){
         this.setTxId(txId);
         this.setSourceAccountId(sourceAccountId);
         this.setDestinationAccountId(destinationAccountId);
         this.setAmount(amount);
     }
+
     public Transaction toDomain(){
         return new Transaction(getTxId(),getSourceAccountId(),getDestinationAccountId(),getAmount());
     }

@@ -19,8 +19,9 @@ public class FetchBalanceImpl implements FetchBalance {
     private AccountRepository accountRepository;
 
     @Override
-    public BigDecimal execute(String accountId){
-        AccountTable account = accountRepository.findById(accountId).orElseThrow(() -> new EntityNotFoundException(accountId));
+    public BigDecimal execute(Long accountId){
+        AccountTable account = accountRepository.findById(accountId).orElseThrow(() ->
+                new EntityNotFoundException("Account "+accountId+ " not found"));
         return account.toDomain().getBalance();
     }
 

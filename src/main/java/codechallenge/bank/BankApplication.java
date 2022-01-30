@@ -1,4 +1,4 @@
-package codechallenge.bank.application;
+package codechallenge.bank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

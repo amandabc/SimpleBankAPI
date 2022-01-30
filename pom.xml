@@ -8,7 +8,7 @@
 		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>code-challenge-be</groupId>
+	<groupId>code-challenge</groupId>
 	<artifactId>bank</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bank</name>

@@ -6,11 +6,12 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+
 @Getter
 @Setter
 public class AccountDTO {
 
-    private String id;
+    private Long id;
     private BigDecimal balance;
 
     public AccountDTO (Account account){

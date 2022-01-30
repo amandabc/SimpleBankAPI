@@ -10,6 +10,7 @@ import codechallenge.bank.usecase.interfaces.usecase.CreateAccount;
 import codechallenge.bank.usecase.interfaces.usecase.CreateTransaction;
 import codechallenge.bank.usecase.interfaces.usecase.FetchBalance;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,9 +33,11 @@ public class BankController {
         return ResponseEntity.created(uri).body(new AccountDTO(account));
     }
 
-    @GetMapping("/{accountId}/balance")
-    public FetchBalanceResponseDTO fetchBalanceById(@PathVariable String accountId){
-        return new FetchBalanceResponseDTO(fetchBalance.execute(accountId));
+    @GetMapping(value = "/{accountId}/balance")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<FetchBalanceResponseDTO> fetchBalanceById(@PathVariable Long accountId){
+
+        return ResponseEntity.ok().body(new FetchBalanceResponseDTO(fetchBalance.execute(accountId)));
     }
 
     @PostMapping("/transaction")

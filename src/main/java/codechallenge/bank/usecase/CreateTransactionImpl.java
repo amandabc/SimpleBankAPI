@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.sql.SQLOutput;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +27,16 @@ public class CreateTransactionImpl implements CreateTransaction {
     private final AccountRepository accountRepository;
 
     @Override
-    public Transaction execute(String sourceAccountId, String destinationAccountId, BigDecimal amount) throws Exception {
+    public Transaction execute(Long sourceAccountId, Long destinationAccountId, BigDecimal amount) throws Exception {
 
-        AccountTable sourceAccountTable = accountRepository.findById(sourceAccountId).orElseThrow(() -> new EntityNotFoundException(sourceAccountId));
+        AccountTable sourceAccountTable = accountRepository.findById(sourceAccountId).orElseThrow(()
+                -> new EntityNotFoundException("Account "+sourceAccountId+ " not found"));
         Account sourceAccount = sourceAccountTable.toDomain();
-        if (amount.compareTo(sourceAccount.getBalance())<0) {
+        if (amount.compareTo(sourceAccount.getBalance())>0) {
             throw new Exception("Not enough balance in source account to perform transaction");
         } else {
-            AccountTable destinationAccountTable = accountRepository.findById(destinationAccountId).orElseThrow(() -> new EntityNotFoundException(destinationAccountId));
+            AccountTable destinationAccountTable = accountRepository.findById(destinationAccountId).orElseThrow(()
+                    -> new EntityNotFoundException("Account "+destinationAccountId+ " not found"));
             Account destinationAccount = destinationAccountTable.toDomain();
 
             sourceAccount.setBalance(sourceAccount.getBalance().subtract(amount));
@@ -44,6 +47,6 @@ public class CreateTransactionImpl implements CreateTransaction {
 
             return transactionRepository.save(new TransactionTable(sourceAccountId, destinationAccountId, amount)).toDomain();
 
-        }
+            }
         }
     }
