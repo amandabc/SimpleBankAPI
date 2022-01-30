@@ -1,6 +1,5 @@
 package codechallenge.bank.usecase;
 
-import codechallenge.bank.domain.Account;
 import codechallenge.bank.infra.repository.AccountRepository;
 import codechallenge.bank.infra.repository.model.AccountTable;
 import codechallenge.bank.usecase.interfaces.usecase.FetchBalance;
