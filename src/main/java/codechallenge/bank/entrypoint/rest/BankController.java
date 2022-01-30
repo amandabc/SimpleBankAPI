@@ -32,21 +32,28 @@ public class BankController {
         return ResponseEntity.created(uri).body(new AccountDTO(account));
     }
 
-    @GetMapping("/balance/{accountId}")
-    public FetchBalanceResponseDTO fetchBalanceById(String accountId){
+    @GetMapping("/{accountId}/balance")
+    public FetchBalanceResponseDTO fetchBalanceById(@PathVariable String accountId){
         return new FetchBalanceResponseDTO(fetchBalance.execute(accountId));
     }
 
     @PostMapping("/transaction")
     public ResponseEntity<TransactionDTO> createTransaction(
-            @RequestBody CreateTransactionDTO createTransactionDTO, UriComponentsBuilder uriBuilder){
-        Transaction transaction =  createTransaction.execute(
-                createTransactionDTO.getSourceAccountId(),
-                createTransactionDTO.getDestinationAccountId(),
-                createTransactionDTO.getAmount());
+                                        @RequestBody CreateTransactionDTO createTransactionDTO,
+                                        UriComponentsBuilder uriBuilder){
+        try {
+            Transaction transaction = createTransaction.execute(
+                    createTransactionDTO.getSourceAccountId(),
+                    createTransactionDTO.getDestinationAccountId(),
+                    createTransactionDTO.getAmount());
 
-        URI uri = uriBuilder.path("/transaction/{id}").buildAndExpand(transaction.getTxId()).toUri();
-        return ResponseEntity.created(uri).body(new TransactionDTO(transaction));
+            URI uri = uriBuilder.path("/transaction/{id}").buildAndExpand(transaction.getTxId()).toUri();
+            return ResponseEntity.created(uri).body(new TransactionDTO(transaction));
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 

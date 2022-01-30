@@ -5,5 +5,5 @@ import codechallenge.bank.domain.Transaction;
 import java.math.BigDecimal;
 
 public interface CreateTransaction {
-    Transaction execute(String sourceAccountId, String destinationAccountId, BigDecimal amount);
+    Transaction execute(String sourceAccountId, String destinationAccountId, BigDecimal amount) throws Exception;
 }
