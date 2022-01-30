@@ -5,4 +5,5 @@ import codechallenge.bank.domain.Account;
 public interface CreateAccount {
 
     Account execute();
+
 }

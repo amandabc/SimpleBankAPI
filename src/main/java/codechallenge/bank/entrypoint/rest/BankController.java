@@ -36,7 +36,6 @@ public class BankController {
     @GetMapping(value = "/{accountId}/balance")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<FetchBalanceResponseDTO> fetchBalanceById(@PathVariable Long accountId){
-
         return ResponseEntity.ok().body(new FetchBalanceResponseDTO(fetchBalance.execute(accountId)));
     }
 
@@ -58,7 +57,4 @@ public class BankController {
         }
         return null;
     }
-
-
-
 }

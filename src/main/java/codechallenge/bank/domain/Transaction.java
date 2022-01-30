@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class Transaction {
+
     private Long txId;
     private Long sourceAccountId;
     private Long destinationAccountId;

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
-
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +30,7 @@ public class CreateTransactionImpl implements CreateTransaction {
         AccountTable sourceAccountTable = accountRepository.findById(sourceAccountId).orElseThrow(()
                 -> new EntityNotFoundException("Account "+sourceAccountId+ " not found"));
         Account sourceAccount = sourceAccountTable.toDomain();
+
         if (amount.compareTo(sourceAccount.getBalance())>0) {
             throw new Exception("Not enough balance in source account to perform transaction");
         } else {

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-
 @Service
 @RequiredArgsConstructor
 public class CreateAccountImpl implements CreateAccount {
@@ -22,4 +21,5 @@ public class CreateAccountImpl implements CreateAccount {
     public Account execute(){
         return accountRepository.save(new AccountTable(new BigDecimal(0))).toDomain();
     }
+
 }

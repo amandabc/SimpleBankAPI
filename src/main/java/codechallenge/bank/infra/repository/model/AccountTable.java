@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-
 @Entity
 @Table(name = "account")
 @Getter
@@ -33,7 +32,6 @@ public class AccountTable {
     public Account toDomain(){
         return new Account(this.id,this.balance);
     }
-
 
 }
 
