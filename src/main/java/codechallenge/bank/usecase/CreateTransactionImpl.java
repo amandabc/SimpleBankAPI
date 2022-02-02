@@ -30,7 +30,6 @@ public class CreateTransactionImpl implements CreateTransaction {
         AccountTable sourceAccountTable = accountRepository.findById(sourceAccountId).orElseThrow(()
                 -> new EntityNotFoundException("Account "+sourceAccountId+ " not found"));
         Account sourceAccount = sourceAccountTable.toDomain();
-
         if (amount.compareTo(sourceAccount.getBalance())>0) {
             throw new Exception("Not enough balance in source account to perform transaction");
         } else {
@@ -44,8 +43,8 @@ public class CreateTransactionImpl implements CreateTransaction {
             accountRepository.save(sourceAccount.toEntity());
             accountRepository.save(destinationAccount.toEntity());
 
-            return transactionRepository.save(new TransactionTable(sourceAccountId, destinationAccountId, amount)).toDomain();
+            return transactionRepository.save(new TransactionTable(amount,sourceAccountId, destinationAccountId)).toDomain();
 
-            }
         }
     }
+}

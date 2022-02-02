@@ -1,6 +1,7 @@
 package codechallenge.bank.infra.repository.model;
 
 import codechallenge.bank.domain.Transaction;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "transaction")
@@ -21,13 +23,13 @@ public class TransactionTable {
     private Long sourceAccountId;
     private Long destinationAccountId;
 
-    public TransactionTable(Long sourceAccountId, Long destinationAccountId, BigDecimal amount){
+    public TransactionTable(BigDecimal amount, Long sourceAccountId, Long destinationAccountId){
+        this.setAmount(amount);
         this.setSourceAccountId(sourceAccountId);
         this.setDestinationAccountId(destinationAccountId);
-        this.setAmount(amount);
     }
 
-    public TransactionTable(Long txId, Long sourceAccountId, Long destinationAccountId, BigDecimal amount){
+    public TransactionTable(Long txId, BigDecimal amount, Long sourceAccountId, Long destinationAccountId){
         this.setTxId(txId);
         this.setSourceAccountId(sourceAccountId);
         this.setDestinationAccountId(destinationAccountId);

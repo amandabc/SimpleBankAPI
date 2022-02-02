@@ -1,1 +1,0 @@
-INSERT INTO ACCOUNT(balance) VALUES ('10');

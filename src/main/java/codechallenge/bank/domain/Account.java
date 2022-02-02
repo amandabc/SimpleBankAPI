@@ -1,6 +1,7 @@
 package codechallenge.bank.domain;
 
 import codechallenge.bank.infra.repository.model.AccountTable;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder(toBuilder = true)
 @NoArgsConstructor
 public class Account {
 
