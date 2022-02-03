@@ -34,7 +34,6 @@ public class CreateTransactionTest {
     @Mock
     private TransactionRepository transactionRepository;
 
-
     @Test
     void shouldCreateTransactionIfSourceAccountHasBalanceLargerOrEqualToAmountToBeTransferred() throws Exception {
         final Account sourceAccount = MocksUtil.createMockForAccount(1L, new BigDecimal(10.0));
@@ -67,10 +66,6 @@ public class CreateTransactionTest {
         final Account destinationAccount = MocksUtil.createMockForAccount(2L, new BigDecimal(0.0));
         final BigDecimal amount = new BigDecimal(20.0);
 
-        final AccountTable sourceAccountTable = MocksUtil.createMockForAccountTable(1L, new BigDecimal(10.0));
-        final AccountTable destinationAccountTable = MocksUtil.createMockForAccountTable(2L, new BigDecimal(0.0));
-        final TransactionTable transactionTable = MocksUtil.createMockForTransactionTable();
-
         assertThrows(Exception.class, ()->useCase.execute(sourceAccount.getId(), destinationAccount.getId(),amount));
     }
 
@@ -85,11 +80,5 @@ public class CreateTransactionTest {
                 .thenThrow(new EntityNotFoundException("Account "+sourceAccountId+ " not found"));
 
         assertThrows(EntityNotFoundException.class, ()->useCase.execute(sourceAccountId, destinationAccountId,amount));
-
     }
-
-
-
-
-
 }

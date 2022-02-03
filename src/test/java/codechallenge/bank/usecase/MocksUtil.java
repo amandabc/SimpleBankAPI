@@ -35,6 +35,5 @@ public class MocksUtil {
                 .destinationAccountId(2L)
                 .amount(new BigDecimal(10.0))
                 .build();
-
     }
 }
