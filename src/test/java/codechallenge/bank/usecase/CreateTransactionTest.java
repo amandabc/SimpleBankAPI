@@ -70,6 +70,15 @@ public class CreateTransactionTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenAmountToBeTransferredIsNegative(){
+        final Account sourceAccount = MocksUtil.createMockForAccount(1L, new BigDecimal(10.0));
+        final Account destinationAccount = MocksUtil.createMockForAccount(2L, new BigDecimal(0.0));
+        final BigDecimal amount = new BigDecimal(-20.0);
+
+        assertThrows(Exception.class, ()->useCase.execute(sourceAccount.getId(), destinationAccount.getId(),amount));
+    }
+
+    @Test
     void shouldThrowExceptionIfOneOfTheAccountsDoesntExist(){
         final Long sourceAccountId = 1L;
         final Long destinationAccountId = 2L;

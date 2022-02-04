@@ -17,6 +17,7 @@ public class Account {
     private Long id;
     private BigDecimal balance;
 
+
     public Account(Long accountId, BigDecimal balance){
         setBalance(balance);
         setId(accountId);

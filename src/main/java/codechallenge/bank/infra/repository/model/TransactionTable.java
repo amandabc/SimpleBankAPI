@@ -23,17 +23,28 @@ public class TransactionTable {
     private Long sourceAccountId;
     private Long destinationAccountId;
 
+    @Version
+    private Integer version;
+
     public TransactionTable(BigDecimal amount, Long sourceAccountId, Long destinationAccountId){
-        this.setAmount(amount);
-        this.setSourceAccountId(sourceAccountId);
-        this.setDestinationAccountId(destinationAccountId);
+        setAmount(amount);
+        setSourceAccountId(sourceAccountId);
+        setDestinationAccountId(destinationAccountId);
     }
 
     public TransactionTable(Long txId, BigDecimal amount, Long sourceAccountId, Long destinationAccountId){
-        this.setTxId(txId);
-        this.setSourceAccountId(sourceAccountId);
-        this.setDestinationAccountId(destinationAccountId);
-        this.setAmount(amount);
+        setTxId(txId);
+        setSourceAccountId(sourceAccountId);
+        setDestinationAccountId(destinationAccountId);
+        setAmount(amount);
+    }
+
+    public TransactionTable(Long txId, BigDecimal amount, Long sourceAccountId, Long destinationAccountId, Integer version){
+        setTxId(txId);
+        setSourceAccountId(sourceAccountId);
+        setDestinationAccountId(destinationAccountId);
+        setAmount(amount);
+        setVersion(version);
     }
 
     public Transaction toDomain(){
