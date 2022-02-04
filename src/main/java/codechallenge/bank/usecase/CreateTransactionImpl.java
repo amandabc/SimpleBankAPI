@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
 @Service
@@ -25,6 +26,7 @@ public class CreateTransactionImpl implements CreateTransaction {
     private final AccountRepository accountRepository;
 
     @Override
+    @Transactional
     public Transaction execute(Long sourceAccountId, Long destinationAccountId, BigDecimal amount) throws Exception {
 
         AccountTable sourceAccountTable = accountRepository.findById(sourceAccountId).orElseThrow(()
@@ -33,6 +35,9 @@ public class CreateTransactionImpl implements CreateTransaction {
         if (amount.compareTo(sourceAccount.getBalance())>0) {
             throw new Exception("Not enough balance in source account to perform transaction");
         } else {
+            if(amount.compareTo(new BigDecimal(0.0))<0){
+                throw new Exception("You can't perform a transaction with a negative value");
+            }
             AccountTable destinationAccountTable = accountRepository.findById(destinationAccountId).orElseThrow(()
                     -> new EntityNotFoundException("Account "+destinationAccountId+ " not found"));
             Account destinationAccount = destinationAccountTable.toDomain();

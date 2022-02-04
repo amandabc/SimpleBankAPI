@@ -22,9 +22,18 @@ public class AccountTable {
     private Long id;
     private BigDecimal balance;
 
+    @Version
+    private Integer version;
+
     public AccountTable(Long id, BigDecimal balance){
         setId(id);
         setBalance(balance);
+    }
+
+    public AccountTable(Long id, BigDecimal balance, Integer version){
+        setId(id);
+        setBalance(balance);
+        setVersion(version);
     }
 
     public AccountTable(BigDecimal balance){

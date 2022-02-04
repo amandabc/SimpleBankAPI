@@ -1,6 +1,5 @@
 package codechallenge.bank.domain;
 
-import codechallenge.bank.infra.repository.model.TransactionTable;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

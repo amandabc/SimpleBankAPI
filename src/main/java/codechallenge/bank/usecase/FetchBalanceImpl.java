@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
 @Service
@@ -18,6 +19,7 @@ public class FetchBalanceImpl implements FetchBalance {
     private AccountRepository accountRepository;
 
     @Override
+    @Transactional
     public BigDecimal execute(Long accountId){
         AccountTable account = accountRepository.findById(accountId).orElseThrow(() ->
                 new EntityNotFoundException("Account "+accountId+ " not found"));

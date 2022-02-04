@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
 @Service
@@ -18,6 +19,7 @@ public class CreateAccountImpl implements CreateAccount {
     private final AccountRepository accountRepository;
 
     @Override
+    @Transactional
     public Account execute(){
         return accountRepository.save(new AccountTable(new BigDecimal(0))).toDomain();
     }
